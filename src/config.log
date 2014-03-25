@@ -1,0 +1,92 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:531: checking for path separator
+configure:559: checking for Cygwin environment
+configure:592: checking for mingw32 environment
+configure:621: checking for EMX/OS2 environment
+configure:665: checking for executable suffix
+configure:736: checking for a BSD compatible install
+configure:791: checking whether build environment is sane
+configure:848: checking whether make sets ${MAKE}
+configure:894: checking for working aclocal
+configure:907: checking for working autoconf
+configure:920: checking for working automake
+configure:933: checking for working autoheader
+configure:946: checking for working makeinfo
+configure:972: checking host system type
+configure:995: checking for gcc
+configure:1112: checking whether the C compiler (gcc.exe -O2 -m486 -Zmt -s -Zmt -Zcrtdll -Zsysv-signals -Zbin-files) works
+configure:1128: gcc.exe -o conftest.exe -O2 -m486 -Zmt  -s -Zmt -Zcrtdll -Zsysv-signals -Zbin-files conftest.c  1>&5
+configure:1154: checking whether the C compiler (gcc.exe -O2 -m486 -Zmt -s -Zmt -Zcrtdll -Zsysv-signals -Zbin-files) is a cross-compiler
+configure:1159: checking whether we are using GNU C
+configure:1187: checking whether gcc.exe accepts -g
+configure:1219: checking for POSIXized ISC
+configure:1251: checking for a BSD compatible install
+configure:1307: checking how to run the C preprocessor
+configure:1390: checking for ANSI C header files
+configure:1498: checking for string.h
+configure:1498: checking for fcntl.h
+configure:1498: checking for unistd.h
+configure:1498: checking for byteswap.h
+configure:1498: checking for sys/stat.h
+configure:1498: checking for sys/mman.h
+configure:1498: checking for locale.h
+configure:1537: checking for working const
+configure:1612: checking for inline
+configure:1652: checking for off_t
+configure:1685: checking for size_t
+configure:1728: checking whether byte ordering is bigendian
+configure:1820: checking for sqrt in -lm
+configure:1870: checking for unistd.h
+configure:1910: checking for getpagesize
+configure:1963: checking for working mmap
+configure:2136: checking for strerror
+configure:2136: checking for strtod
+configure:2136: checking for strchr
+configure:2136: checking for memcpy
+configure:2136: checking for gethostname
+configure:2198: checking size of char
+configure:2237: checking size of short
+configure:2276: checking size of int
+configure:2315: checking size of long
+configure:2359: checking for an 8-bit type
+configure:2390: checking for a 16-bit type
+configure:2421: checking for a 32-bit type
+configure:2453: checking for int8_t
+configure:2486: checking for int16_t
+configure:2519: checking for int32_t
+configure:2552: checking for uint8_t
+configure:2585: checking for uint16_t
+configure:2618: checking for uint32_t
+configure:2654: checking for ranlib
+configure:2685: checking for working alloca.h
+configure:2718: checking for alloca
+configure:2922: checking for argz.h
+configure:2922: checking for limits.h
+configure:2922: checking for locale.h
+configure:2922: checking for nl_types.h
+configure:2922: checking for malloc.h
+configure:2922: checking for string.h
+configure:2922: checking for unistd.h
+configure:2922: checking for sys/param.h
+configure:2963: checking for getcwd
+configure:2963: checking for munmap
+configure:2963: checking for putenv
+configure:2963: checking for setenv
+configure:2963: checking for setlocale
+configure:2963: checking for strchr
+configure:2963: checking for strcasecmp
+configure:2963: checking for strdup
+configure:2963: checking for __argz_count
+configure:2963: checking for __argz_stringify
+configure:2963: checking for __argz_next
+configure:3082: checking for LC_MESSAGES
+configure:3115: checking whether NLS is requested
+configure:3135: checking whether included gettext is requested
+configure:3154: checking for libintl.h
+configure:3500: checking whether catgets can be used
+configure:3780: checking for msgfmt
+configure:3814: checking for gmsgfmt
+configure:3854: checking for xgettext
+configure:3947: checking for catalogs to be installed

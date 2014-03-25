@@ -1,0 +1,29 @@
+                          Upload Information Template for Hobbes.nmsu.edu
+                          ===============================================
+
+        Archive Filename:   normalize-0.5.2.zip
+       Short Description:    Normalize 0.5.2, a textmode program to adjust the volume of several files
+                                   to the same level. Source included.
+        Long Description:    Normalize is an overly complicated tool for adjusting the volume of
+                                   wave files to a standard volume level. This is useful for things like
+                                   creating mp3 mixes, where different recording levels on different
+                                   albums can cause the volume to vary greatly from song to song.
+   
+      Proposed directory
+           for placement:    
+
+               Your name:   Chris Wohlgemuth
+           Email address:   see Readme.os2
+    Program contact name: (same)
+   Program contact email: (same)
+             Program URL:    http://www.geocities.com/SiliconValley/Sector/5785/
+
+      Would you like the
+   contact email address
+    included in listings? yes
+
+Operating System/Version: Any 32bit version of OS/2 
+ Additional requirements:   EMX runtime libraries 0.9d fix 3
+
+                Replaces: (none)
+

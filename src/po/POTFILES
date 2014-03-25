@@ -1,0 +1,3 @@
+	../././normalize.c \
+	../././getopt.c \
+	../././getopt1.c

@@ -1,0 +1,14 @@
+                               -*- text -*-
+ - add configure option to turn off lookup table
+ - read from stdin should assume host byte order (or should it?)
+
+For v0.6:
+ - support for ID3V2 volume adjustment tags
+ - move source code to src subdir
+
+Later:
+ - audiofile support (?)
+
+Much later:
+ - look into MMX optimizations
+ - look into accounting for frequency

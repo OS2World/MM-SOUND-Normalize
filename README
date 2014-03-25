@@ -1,0 +1,185 @@
+This is release 0.5.2 of Normalize, a wave file volume normalizer.
+Copyleft 2001, Chris Vaill <cvaill@cs.columbia.edu>
+
+Normalize is an overly complicated tool for adjusting the volume of
+wave files to a standard volume level.  This is useful for things like
+creating mp3 mixes, where different recording levels on different
+albums can cause the volume to vary greatly from song to song.
+
+To build, just do:
+
+./configure
+make
+make install
+
+See the file INSTALL for more extensive directions.
+See the man page, normalize.1, for usage.
+
+Send bug reports, suggestions, comments to cvaill@cs.columbia.edu.
+
+normalize is free software.  See the file COPYING for copying conditions.
+
+-------------------------------------------------------------------------
+
+1 What platforms does this work on?
+       I've tested normalize on GNU/Linux on x86 and Solaris on
+       sparc.  I've heard that it works on GNU/Linux on alpha and
+       on BeOS R5 (using the configure options --with-included-gettext
+       and --disable-nls).
+
+       I've tried to make the code as portable as possible, so
+       I'd appreciate hearing whether normalize works on other
+       platforms.
+
+2 What is this useful for?
+       Let's say you've got a bunch of wav files containing what
+       are, in your estimation, Elvis's greatest hits, collected
+       from various albums.  You want to encode them as mp3's and
+       add them to an established collection, but since they're
+       all from different albums, they're all recorded at differ­
+       ent volumes from each other and from the rest of your mp3
+       collection.  If you've been using normalize on all your
+       wav files before you encode them, your collection is nor­
+       malized to the default volume level, and you want these
+       new additions to be at the same level.  Just run normalize
+       with no options on the files, and each will be adjusted to
+       the proper volume level:
+
+            normalize "Hound Dog.wav" "Blue Suede Shoes.wav" \
+                      "Here Comes Santa Claus.wav" ...
+
+       Suppose now you've just extracted all the wav files from
+       the Gorilla Biscuits album "Start Today," which, you may
+       know, is recorded at a particularly low volume.  We want
+       to make the whole album louder, but individual tracks
+       should stay at the same volume relative to each other.
+       For this we use batch mode.  Say the files are named
+       01.wav to 14.wav, and are in the current directory.  We
+       invoke normalize in batch mode to preserve the relative
+       volumes, but otherwise, everything's the default:
+
+            normalize -b *.wav
+
+       You can then fire up your mp3 encoder, and the whole album
+       will be uniformly louder.
+
+       Now suppose we want to encode the Converge album "When
+       Forever Comes Crashing."  This album has one song, "Ten
+       Cents," that is really quiet while the rest of the songs
+       have about the same (loud) volume.  We'll turn up the ver­
+       bosity so we can see what's going on:
+
+            > normalize -bv *.wav
+            Computing levels...
+            Level for 01.wav: 0.339
+            Level for 02.wav: 0.345
+            Level for 03.wav: 0.370
+            Level for 04.wav: 0.366
+            Level for 05.wav: 0.394
+            Level for 06.wav: 0.388
+            Level for 07.wav: 0.358
+            Level for 08.wav: 0.209
+            Level for 09.wav: 0.354
+            Level for 10.wav: 0.390
+            Level for 11.wav: 0.373
+            Standard deviation is 1.48 dB
+            Throwing out level of 0.209 (different by 4.65dB)
+            Average level: 0.368
+            Applying gain of 0.679...
+
+       The volume of "Ten Cents," which is track 8, is 4.65 deci­
+       bels off the average, which, given a standard deviation of
+       1.48 decibels, makes it a statistical aberration (which
+       I've defined as anything off by more that twice the stan­
+       dard deviation, but you can set a constant decibel thresh­
+       old with the -t option).  Therefore, it isn't counted in
+       the average, and the adjustment applied to the album isn't
+       thrown off because of one song.
+
+       Finally, say you want to make a mixed CD of 80's songs for
+       your mom or something.  You won't allow any 80's songs to
+       taint your hallowed mp3 collection, so the absolute vol­
+       umes of these tracks don't matter, as long as they're all
+       about the same, so mom doesn't have to keep adjusting the
+       volume.  For this, use the mix mode option,
+
+            normalize -m *.wav
+
+       and each track will be adjusted to the average level of
+       all the tracks.
+
+3 How does it work?
+       This is just a little background on how normalize computes
+       the volume of a wav file, in case you want to know just
+       how your files are being munged.
+
+       The volumes calculated are RMS amplitudes, which corre­
+       spond (roughly) to perceived volume.  Taking the RMS
+       amplitude of an entire file would not give us quite the
+       measure we want, though, because a quiet song punctuated
+       by short loud parts would average out to a quiet song, and
+       the adjustment we would compute would make the loud parts
+       excessively loud.
+
+       What we want is to consider the maximum volume of the
+       file, and normalize according to that.  We break up the
+       signal into 100 chunks per second, and get the signal
+       power of each chunk, in order to get an estimation of
+       "instantaneous power" over time.  This "instantaneous
+       power" signal varies too much to get a good measure of the
+       original signal's maximum sustained power, so we run a
+       smoothing algorithm over the power signal (specifically, a
+       mean filter with a window width of 100 elements).  The
+       maximum point of the smoothed power signal turns out to be
+       a good measure of the maximum sustained power of the file.
+       We can then take the square root of the power to get maxi­
+       mum sustained RMS amplitude.
+
+       As for the default target amplitude of 0.25, I've found
+       that it's pretty close to the level of most of my albums
+       already, but not so high as to cause a lot of clipping on
+       quieter albums.  You may want to choose a different target
+       amplitude, depending on your music collection (just make
+       sure you normalize everything to the same amplitude if you
+       want it to all be the same volume!).
+
+       Please note that I'm not an electrical engineer or statis­
+       tician, so my signal processing theory may be off.  I'd be
+       glad to hear from any signal processing wizards if I've
+       made faulty assumptions regarding signal power, perceived
+       volume, or any of that fun signal theory stuff.
+
+4 Why don't you normalize using peak levels instead of RMS amplitude?
+       Well, in early (unreleased) versions, this is how it
+       worked. I found that this just didn't work well.  The vol­
+       ume that your ear hears corresponds more closely with
+       average RMS amplitude level than with peak level.  There­
+       fore, making the RMS amplitude of two files equal makes
+       their perceived volume equal.  (Approximately equal, any­
+       way: certain frequencies sound louder at the same ampli­
+       tude because the ear is just more sensitive to those fre­
+       quencies.  I may try to take this into account in a future
+       version, but that opens up a whole new can of worms.)
+
+       "Normalizing" by peak level generally makes files with
+       small dynamic range very loud and does nothing to files
+       with large dynamic ranges.  There's not really any normal­
+       ization being done, it's more of a histogram expansion.
+       That said, since version 0.5, you can use the --peak
+       option to do this in normalize.
+
+       Regarding clipping: since version 0.5.1, the -c option
+       causes normalize to do dynamic range compression instead
+       of clipping.  This completely eliminates clipping, but
+       results in inexact volume adjustment.  Thanks to Ted
+       Wright for this suggestion.
+
+5 Can you make normalize operate directly on mp3 files?
+       I don't know a whole lot about the innards of mpeg audio,
+       but I think that in order to do the volume analysis, and
+       especially to do the adjustment, you need the audio data
+       in PCM format. So, to normalize an mp3 file, you could
+       decode it, normalize it, and re-encode it, but you'd incur
+       the encoding loss a second time. If you don't mind the
+       loss, you can do just this with the "normalize-mp3" script
+       that is now included in the distribution.

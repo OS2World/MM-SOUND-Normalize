@@ -1,0 +1,113 @@
+#!i:/unix_stuff/bin/bash.exe
+# Copyright (C) 1999--2001 Chris Vaill
+# This file is part of normalize.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+
+# configure DECODER, ENCODER, and NORMALIZE for local setup
+# %m becomes name of mp3 file, %w becomes name of temporary WAV file
+DECODER="mpg123 -w %w %m"
+ENCODER="lame -h %w %m"
+NORMALIZE="normalize"
+
+
+#######################################################################3
+
+VERSION=0.5.2
+
+usage () {
+    cat << EOF
+Usage: $0 [OPTION]... [FILE]...
+  Normalize volume of mp3 files by decoding, running normalize, and
+  re-encoding.  Batch mode and mix mode cannot be used, but this only
+  requires as much extra disk space as the largest mp3 file, decoded.
+
+  -a AMP     \\
+  -g ADJ      |_ These arguments are passed as arguments to normalize.
+  -v          |  Run "normalize --help" for more info.
+  -q         /
+  -h         Display this help and exit.
+  -V         Display version information and exit.
+
+Report bugs to <cvaill@cs.columbia.edu>.
+EOF
+}
+
+NORMALIZE_ARGS=
+NOMOREARGS=false
+
+if test "x$1" = x; then
+    usage
+    exit 0
+fi
+
+while test "x$1" != x; do
+    if test x$NOMOREARGS != xtrue; then
+	case "$1" in
+	-*) case "$1" in
+	    -a|--amplitude)
+		NORMALIZE_ARGS="$NORMALIZE_ARGS -a $2"
+		shift 2 ; continue ;;
+	    -g|--gain)
+		NORMALIZE_ARGS="$NORMALIZE_ARGS -g $2"
+		shift 2 ; continue ;;
+	    -v|--verbose)
+		NORMALIZE_ARGS="$NORMALIZE_ARGS -v"
+		shift ; continue ;;
+	    -q|--quiet)
+		NORMALIZE_ARGS="$NORMALIZE_ARGS -q"
+		shift ; continue ;;
+	    -h|--help)
+		usage ; exit 0 ;;
+	    -V|--version)
+		echo "normalize-mp3, from the normalize $VERSION distribution"
+		exit 0 ;;
+	    --) NOMOREARGS=true
+		shift ; continue ;;
+	    *) echo "Unrecognized option \"$1\"" ; usage ; exit 1 ;;
+	    esac
+	    ;;
+	esac
+    fi
+
+    MP3_FILE="$1"
+    WAV_FILE=`basename "$1" .mp3`.wav
+
+    # construct encode and decode commands
+    DECODE_CMD=`echo $DECODER \
+	| sed -e "s/%w/\"$WAV_FILE\"/g;s/%m/\"$MP3_FILE\"/g"`
+    ENCODE_CMD=`echo $ENCODER \
+	| sed -e "s/%w/\"$WAV_FILE\"/g;s/%m/\"$MP3_FILE\"/g"`
+
+    # run decoder
+    eval $DECODE_CMD
+
+    if [ $? != 0 ]; then echo "$0: error decoding"; exit 1; fi
+
+    # normalize
+    eval "$NORMALIZE $NORMALIZE_ARGS \"$WAV_FILE\""
+
+    # if normalize returns 2, no adjustment was made
+    if [ $? != 2 ]; then
+	# run encoder
+	eval $ENCODE_CMD
+    fi
+
+    # delete WAV file
+    rm -f "$WAV_FILE"
+
+    shift
+done

@@ -1,0 +1,145 @@
+.TH NORMALIZE 1
+.rn RS Rs
+.de RS
+.na
+.nf
+.Rs
+..
+.rn RE Re
+.de RE
+.Re
+.fi
+.ad
+..
+.de Sx
+.PP
+.ne \\$1
+.RS
+..
+.de Ex
+.RE
+.PP
+..
+.na
+.SH NAME
+normalize \- adjusts volume levels of audio files.
+
+.SH SYNOPSIS
+.B normalize
+[options] [\-\-] file [...]
+
+.SH DESCRIPTION
+\fBnormalize\fR is used to adjust the volume of wav audio files to a
+standard volume level.  This is useful for things like creating mp3
+mixes, where different recording levels on different albums can cause
+the volume to vary greatly from song to song.
+
+\fBnormalize\fR operates in two phases.  In the first phase, it
+analyzes the specified files as wav audio files, and computes the
+volume of each file.  In the second phase, it applies a volume
+adjustment to each file to set each file's volume to a standard level.
+
+As a special case, the filename "-" will cause \fBnormalize\fR to read
+audio data from standard input.  The data is assumed to be 44.1 kHz,
+16 bit little-endian, stereo PCM data (i.e. without a WAV header).  If
+standard input is specified as a file, the \fB-n\fR option is implied.
+
+.SH OPTIONS
+
+.TP 4
+.B -a\fR, \fB--amplitude\fR=\fIAMPLITUDE\fR
+Adjust the RMS volume to the target amplitude AMPLITUDE; must be
+between 0.0 and 1.0.  The default is 0.25.  If a number suffixed by
+"dB" or "dBFS" is specified, the amplitude is assumed to be in
+decibels from full scale.  (0.25 is approximately -12 dBFS).
+.TP
+.B -b\fR, \fB--batch\fR
+Enable batch mode: see \fBBATCH MODE\fR, below.
+.TP
+.B -c\fR, \fB--compression\fR
+Enable dynamic range compression.  By default, adjusted samples that
+are too large are clipped.  With a large positive gain and a file that
+is already loud, this may result in noticeable clipping artifacts.
+This option will eliminate clipping artifacts, but the file's level
+will not be adjusted exactly.  Compression will not be performed if it
+is not needed (i.e. if no clipping would have occurred anyway).
+.TP
+.B -g\fR, \fB--gain\fR=\fIGAIN\fR
+Skip the volume computation phase: don't compute the volume adjustment
+from the current volumes of the files.  Instead, just apply the given
+gain as a volume adjustment to all files.  As a plain number this is
+just a multiplier applied to all samples, If a number suffixed by "dB"
+is specified, all volumes are adjusted by that many decibels.
+.TP
+.B -m\fR, \fB--mix\fR
+Enable mix mode: see \fBMIX MODE\fR, below.  Batch mode and mix mode
+are mutually exclusive.
+.TP
+.B -n\fR, \fB--no-adjust\fR
+Compute and output the volume adjustment that would set the volume to
+target, but don't apply it to any of the files (i.e. skip the second
+phase).  If you use this option, your files will not be altered in any
+way.
+.TP
+.B --peak\fR
+Adjust using peak levels instead of RMS levels.  Each file will be
+adjusted so that its maximum sample is at full scale.  This just gives
+a file the maximum volume possible without clipping; no normalization
+is done.
+.TP
+.B -q\fR, \fB--quiet\fR
+Don't output progress information.  Only error messages are printed.
+.TP
+.B -t\fR, \fB--threshold\fR=\fITHRESHOLD\fR
+In batch mode (see \fBBATCH MODE\fR, below), when averaging volume
+levels, throw out any volumes that are more than THRESHOLD decibels
+from the average.  A high value here (say, 50) will make sure that the
+volumes of all files are considered in the average.
+.TP
+.B -v\fR, \fB--verbose\fR
+Increase verbosity.  This option can be repeated for more messages.
+.TP
+.B -h\fR, \fB--help\fR
+Display usage information and exit.
+.TP
+.B -V\fR, \fB--version\fR
+Print version information and exit.
+.TP
+.B --\fR
+Terminate option list.
+
+.SH MIX MODE
+This mode is made especially for making mixed CD's and the like.  You
+want every song on the mix to be the same volume, but it doesn't
+matter if they are the same volume as the songs on some other mix you
+made last week.  In mix mode, average level of all the files is
+computed, and each file is normalized to this average volume.
+
+.SH BATCH MODE
+When operating on a group of unrelated files, you usually want all of
+them at the same level, and this is the default behavior.  However, a
+group of music files all from the same album is generally meant to be
+listened to at the relative volumes they were recorded at.  In batch
+mode, all the specified files are considered to be part of a single
+album and their relative volumes are preserved.  This is done by
+averaging the volumes of all the files, computing a single adjustment
+from that, and applying the same adjustment to all the files.  Some
+analysis is also done so that files with volumes that appear to be
+statistical aberrations are not considered in the average.  This is
+useful if you have albums (like many of the author's) in which there
+is one "quiet song" that throws off the average.
+
+.SH BUGS
+The pipe "mpg123 -s <file.mp3> | normalize -n -" doesn't work on
+big-endian systems because "mpg123 -s" spits out samples in host byte
+order, and normalize expects little-endian samples.  On big-endian you
+have to use "mpg123 -w" and write to a temporary WAV file.
+
+The French message translations are very bad.  Apologies to French
+speakers for my high school French plus babelfish translations.
+
+.SH AUTHOR
+.br
+Chris Vaill <cvaill@cs.columbia.edu>
+.SH SEE ALSO
+\fBsox(1)\fR

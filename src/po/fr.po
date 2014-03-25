@@ -1,0 +1,403 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: normalize\n"
+"POT-Creation-Date: 2001-02-23 22:08-0500\n"
+"PO-Revision-Date: 2001-02-10 03:04-0500\n"
+"Last-Translator: Chris Vaill\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: normalize.c:169
+#, c-format
+msgid ""
+"Usage: %s [OPTION]... [FILE]...\n"
+"Normalize volume of multiple WAV files\n"
+"\n"
+"  -a, --amplitude=AMP  normalize the RMS volume to the target amplitude\n"
+"                         AMP [default 0.25 or -12dBFS]\n"
+"  -n, --no-adjust      compute and output the volume adjustment, but\n"
+"                         don't apply it to any of the files\n"
+"  -g, --gain=ADJ       don't compute the volume adjustment, just apply\n"
+"                         adjustment ADJ to the files.  Use the suffix "
+"\"dB\"\n"
+"                         to indicate a gain in decibels.\n"
+"  -b, --batch          batch mode: average the levels of all files given\n"
+"                         on the command line, and use one adjustment, based\n"
+"                         on the average level, for all files\n"
+"  -m, --mix            mix mode: average the levels of all files given\n"
+"                         on the command line, and normalize volume of\n"
+"                         each file to the average level\n"
+"  -t, --threshold=THR  in batch mode, throw out any level values more\n"
+"                         than THR decibels different from the average.\n"
+"                         By default, use twice the standard deviation of\n"
+"                         all the power levels.\n"
+"  -c, --compression    do dynamic range compression, instead of clipping.\n"
+"      --peak           adjust using peak levels instead of RMS levels.\n"
+"                         Each file will be adjusted so that its maximum\n"
+"                         sample is at full scale.\n"
+"  -v, --verbose        increase verbosity\n"
+"  -q, --quiet          quiet (decrease verbosity to zero)\n"
+"  -V, --version        display version information and exit\n"
+"  -h, --help           display this help and exit\n"
+"\n"
+"Report bugs to <cvaill@cs.columbia.edu>.\n"
+msgstr ""
+"Utilisation: %s normalize [OPTION]... [FICHIER]...\n"
+"Normaliser le volume de fichiers WAV multiples\n"
+"\n"
+"  -a, --amplitude=AMP  normaliser le volume RMS à l'amplitude AMP; doit\n"
+"                         être entre 0,0 et 1,0 [défaut 0,25]\n"
+"  -n, --no-adjust      calculer et sortez le réglage de volume, mais\n"
+"                         n'appliquez pas l'à n'importe lequel de ces\n"
+"                         fichiers\n"
+"  -g, --gain=ADJ       ne calculent pas le réglage de volume, s'appliquent\n"
+"                         juste le réglage ADJ aux fichiers.  Employez le\n"
+"                         suffixe \"dB\" pour indiquer que le réglage est\n"
+"                         des décibels\n"
+"  -b, --batch          batch mode: faites la moyenne des niveaux de tous\n"
+"                         les fichiers donnés sur la ligne de commande, et\n"
+"                         utilisez un réglage, basé sur le niveau moyen,\n"
+"                         pour tous les fichiers\n"
+"  -m, --mix            mix mode: faites la moyenne des niveaux de\n"
+"                         tous les fichiers donnés sur la ligne de\n"
+"                         commande, et normalisez le volume de chaque\n"
+"                         fichier moyen au niveau\n"
+"  -t, --threshold=THR  en batch mode, jeter hors de toutes les valeurs\n"
+"                         de niveau plus que THR décibels différents de\n"
+"                         la moyenne. Par défaut, utilisez deux fois\n"
+"                         l'écart type de tous les niveaux de puissance.\n"
+"  -c, --compression    faire le compactage au lieu du découpage.\n"
+"      --peak           ajuster en utilisant les niveaux maximum au lieu des\n"
+"                          niveaux RMS. Chaque fichier sera ajusté de sorte\n"
+"                          que son échantillon maximum soit à complet.\n"
+"  -v, --verbose        augmenter le verbosity\n"
+"  -q, --quiet          quiet (diminuer le verbosity à zéro)\n"
+"  -V, --version        afficher le nom et la version du logiciel\n"
+"  -h, --help           afficher cette aide et quittez\n"
+"\n"
+"Rapporter toutes anomalies à <cvaill@cs.columbia.edu>.\n"
+
+#: normalize.c:285
+#, c-format
+msgid "%s: Warning: assuming you meant -%s...\n"
+msgstr "%s: Avertissement: supposant que vous avez voulu dire -%s...\n"
+
+#: normalize.c:366
+#, c-format
+msgid "%s: error: the -m and -b options are mutually exclusive\n"
+msgstr "%s: erreur: -m et -b sont mutuellement exclusif\n"
+
+#: normalize.c:372
+#, c-format
+msgid "%s: error: -m and -b can't be used with the --peak option\n"
+msgstr "%s: erreur: -m et -b ne peut pas être utilisé avec --peak\n"
+
+#: normalize.c:392
+#, c-format
+msgid "%s: Warning: stdin specified on command line, not adjusting files\n"
+msgstr "%s: Avertissement: stdin indiqué, n'appliquant pas le réglage\n"
+
+#: normalize.c:397
+#, c-format
+msgid "%s: file %s: %s\n"
+msgstr "%s: fichier %s: %s\n"
+
+#: normalize.c:410
+#, c-format
+msgid "%s: no files!\n"
+msgstr "%s: aucuns fichiers!\n"
+
+#: normalize.c:450
+#, c-format
+msgid "%-12.6f average level\n"
+msgstr "%-12.6f moyen niveau\n"
+
+#: normalize.c:452
+#, c-format
+msgid "%-8.4fdBFS average level\n"
+msgstr "%-8.4fdBFS moyen niveau\n"
+
+#: normalize.c:455
+#, c-format
+msgid "Average level: %0.4f\n"
+msgstr "Moyen niveau: %0.4f\n"
+
+#: normalize.c:457
+#, c-format
+msgid "Average level: %0.4fdBFS\n"
+msgstr "Moyen niveau: %0.4fdBFS\n"
+
+#: normalize.c:485
+msgid "Files are already normalized, not adjusting...\n"
+msgstr "Des fichiers sont déjà normalisés, ne s'ajustant pas...\n"
+
+#: normalize.c:490
+#, c-format
+msgid "Applying adjustment of %fdB...\n"
+msgstr "Je m'applique le réglage de %fdB...\n"
+
+#: normalize.c:492
+#, c-format
+msgid "Applying adjustment of %f...\n"
+msgstr "Je m'applique le réglage de %f...\n"
+
+#: normalize.c:494
+#, c-format
+msgid "Applying adjustment of %0.2fdB...\n"
+msgstr "Je m'applique le réglage de %0.2fdB...\n"
+
+#: normalize.c:516 normalize.c:567 normalize.c:675
+#, c-format
+msgid "%s: error opening %s: %s\n"
+msgstr "%s: il y avait une erreur tout en ouvrant %s: %s\n"
+
+#: normalize.c:531
+#, c-format
+msgid "%s already normalized, not adjusting...\n"
+msgstr "%s déjà normalisé, ne s'ajustant pas...\n"
+
+#: normalize.c:537
+#, c-format
+msgid "Applying adjustment of %0.2fdB to %s...\n"
+msgstr "Je m'applique le réglage de %0.2fdB au %s\n"
+
+#: normalize.c:554
+#, c-format
+msgid "%s: error opening temp file: %s\n"
+msgstr "%s: il y avait une erreur tout en lisant le fichier temporaire: %s\n"
+
+#: normalize.c:579
+#, c-format
+msgid "%s: error applying adjustment to %s: %s\n"
+msgstr "%s: il y avait une erreur tout en appliquant le réglage au %s: %s\n"
+
+#: normalize.c:592
+#, c-format
+msgid "%s: error moving %s to %s: %s\n"
+msgstr "%s: il y avait une erreur tandis qu'en mouvement %s à %s: %s\n"
+
+#: normalize.c:611
+#, c-format
+msgid "%-12f volume adjustment\n"
+msgstr "%-12f réglage de volume\n"
+
+#: normalize.c:615
+#, c-format
+msgid "%-12s volume adjustment\n"
+msgstr "%-12s réglage de volume\n"
+
+#: normalize.c:644
+msgid "Computing levels...\n"
+msgstr "Je calcule des niveaux...\n"
+
+#: normalize.c:648
+msgid "  level        peak\n"
+msgstr "  niveau       maximum\n"
+
+#: normalize.c:650
+msgid "  level        peak         gain\n"
+msgstr "  niveau       maximum      réglage\n"
+
+#: normalize.c:689
+#, c-format
+msgid "%s: error reading %s: %s\n"
+msgstr "%s: il y avait une erreur tout en lisant %s: %s\n"
+
+#: normalize.c:700
+#, c-format
+msgid "File %s has zero power, ignoring...\n"
+msgstr "Le fichier %s a la puissance nulle, je l'ignore...\n"
+
+#: normalize.c:738
+#, c-format
+msgid "Level for %s: %0.4f (%0.4f peak)\n"
+msgstr "Niveau pour %s: %0.4f (%0.4f maximum)\n"
+
+#: normalize.c:741
+#, c-format
+msgid "Level for %s: %0.4fdBFS (%0.4fdBFS peak)\n"
+msgstr "Niveau pour %s: %0.4fdBFS (%0.4fdBFS maximum)\n"
+
+#: normalize.c:807
+#, c-format
+msgid "Standard deviation is %0.2f dB\n"
+msgstr "L'écart type est %0.2f dB\n"
+
+#: normalize.c:830
+#, c-format
+msgid "Throwing out level of %0.4f (different by %0.2fdB)\n"
+msgstr "Je jette de niveau %0.4f (différent par %0.2fdB)\n"
+
+#: normalize.c:834
+#, c-format
+msgid "Throwing out level of %0.4fdBFS (different by %0.2fdB)\n"
+msgstr "Je jette de niveau %0.4fdBFS (différent par %0.2fdB)\n"
+
+#: normalize.c:853
+#, c-format
+msgid "%s: all files ignored, try using -t 100\n"
+msgstr "%s: tous les fichiers ont été ignorés, essayez d'utiliser -t 100\n"
+
+#: normalize.c:878
+msgid " %s  --%% done, ETA --:--:-- (batch  --%% done, ETA --:--:--)"
+msgstr " %s  --%% fait, ETA --:--:-- (batch  --%% fait, ETA --:--:--)"
+
+#: normalize.c:884
+msgid " %s  --%% done, ETA --:--:-- (batch %3.0f%% done, ETA --:--:--)"
+msgstr " %s  --%% fait, ETA --:--:-- (batch %3.0f%% fait, ETA --:--:--)"
+
+#: normalize.c:926
+msgid ""
+" %s %3.0f%% done, ETA %02d:%02d:%02d (batch %3.0f%% done, ETA %02d:%02d:%02d)"
+msgstr ""
+" %s %3.0f%% fait, ETA %02d:%02d:%02d (batch %3.0f%% fait, ETA %02d:%02d:%02d)"
+
+#: normalize.c:967 normalize.c:1003
+#, c-format
+msgid "%s: I don't know what to do with %d bytes per sample\n"
+msgstr "%s: Je ne sais pas quoi faire avec des octets de %d par échantillon\n"
+
+#: normalize.c:1016 normalize.c:1029
+#, c-format
+msgid "%s: error reading riff chunk\n"
+msgstr ""
+
+#: normalize.c:1020
+#, c-format
+msgid "%s: not a RIFF WAV file\n"
+msgstr ""
+
+#: normalize.c:1033
+#, c-format
+msgid "%s: no format chunk found\n"
+msgstr ""
+
+#: normalize.c:1051
+#, c-format
+msgid "%s: this is a non-PCM WAV file\n"
+msgstr ""
+
+#: normalize.c:1056
+#, c-format
+msgid "%s: more than 32 bits per sample not implemented\n"
+msgstr "%s: plus de 32 bits par échantillon non mis en application\n"
+
+#: normalize.c:1074
+#, c-format
+msgid "%s: no data chunk found\n"
+msgstr ""
+
+#: normalize.c:1152 normalize.c:1558
+#, c-format
+msgid "%s: error making riff object\n"
+msgstr ""
+
+#: normalize.c:1161 normalize.c:1564
+#, c-format
+msgid "%s: error getting wav data\n"
+msgstr ""
+
+#: normalize.c:1225 normalize.c:1587
+#, c-format
+msgid "%s: failed fdopen: %s\n"
+msgstr ""
+
+#: normalize.c:1594
+#, c-format
+msgid "%s: read failed: %s\n"
+msgstr ""
+
+#: normalize.c:1598
+#, c-format
+msgid "%s: write failed: %s\n"
+msgstr ""
+
+#: normalize.c:1709
+#, c-format
+msgid "%s: failed fwrite: %s\n"
+msgstr ""
+
+#: normalize.c:1729 normalize.c:1732
+#, c-format
+msgid "%s: failed fflush: %s\n"
+msgstr ""
+
+#: normalize.c:1741
+msgid "%s: %d clippings performed, %.4f%% loss\n"
+msgstr "%s: %d coupures ont été exécutées, détruit %.4f%%\n"
+
+#: normalize.c:1747
+msgid "%s: Warning: lost %0.2f%% of data due to clipping              \n"
+msgstr ""
+"%s: Avertissement: détruit %0.2f%% des données dues au découpage             "
+"  \n"
+
+#: normalize.c:1917
+#, c-format
+msgid "%s: unable to malloc\n"
+msgstr "%s: mémoire virtuelle épuisée\n"
+
+#: getopt.c:684
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr ""
+
+#: getopt.c:709
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr ""
+
+#: getopt.c:714
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr ""
+
+#: getopt.c:732 getopt.c:905
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr ""
+
+#. --option
+#: getopt.c:761
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr ""
+
+#. +option or -option
+#: getopt.c:765
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr ""
+
+#. 1003.2 specifies the format of this message.
+#: getopt.c:791
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr ""
+
+#: getopt.c:794
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr ""
+
+#. 1003.2 specifies the format of this message.
+#: getopt.c:824 getopt.c:954
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr ""
+
+#: getopt.c:871
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr ""
+
+#: getopt.c:889
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr ""

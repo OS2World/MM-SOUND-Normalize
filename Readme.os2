@@ -1,0 +1,25 @@
+Readme.os2
+-----------
+
+To compile normalize on OS/2 you need
+
+-a *nix compatible shell like bash
+-gnu make 3.76.1
+-gnu text and file utils
+
+Open a shell and run configure.
+Run 'make' and you're done.
+
+I only did some minor changes to the source mainly to get
+the makefile work. If you're interested about them do a diff
+on the files contained in src_org.
+
+
+Don't ask me how to use this program. I didn't write it nor do I have
+more information about usage than you. Have a look at the file
+Readme and direct any questions to the author.
+
+Chris Wohlgemuth
+
+http://www.geocities.com/SiliconValley/Sector/5785/
+
